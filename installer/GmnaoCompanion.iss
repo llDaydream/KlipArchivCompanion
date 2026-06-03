@@ -11,8 +11,8 @@ AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 
-; Installationsverzeichnis – Nutzer kann es im Wizard ändern
-DefaultDirName={autopf}\{#MyAppName}
+; Per-User-Pfad: kein Admin nötig → silent Updates funktionieren ohne UAC
+DefaultDirName={localappdata}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 

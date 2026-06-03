@@ -74,7 +74,14 @@ public class UpdateService
 
         file.Close();
 
-        Process.Start(new ProcessStartInfo(tempPath) { UseShellExecute = true });
+        // /VERYSILENT   – kein Wizard, kein Klicken
+        // /CLOSEAPPLICATIONS  – schließt die laufende App automatisch
+        // /RESTARTAPPLICATIONS – startet die App nach dem Update neu
+        Process.Start(new ProcessStartInfo(tempPath)
+        {
+            UseShellExecute = true,
+            Arguments = "/VERYSILENT /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS"
+        });
     }
 
     public record ReleaseInfo(Version Version, string DownloadUrl);
