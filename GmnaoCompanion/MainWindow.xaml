@@ -1,0 +1,242 @@
+<Window x:Class="GmnaoCompanion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gmnao Companion"
+        Width="460" Height="380"
+        MinWidth="460" MinHeight="380"
+        WindowStyle="None"
+        Background="#16170F"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="46"
+                      CornerRadius="0"
+                      GlassFrameThickness="0"
+                      ResizeBorderThickness="5"
+                      UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+
+        <!-- Animated Toggle Switch -->
+        <Style x:Key="ToggleSwitch" TargetType="ToggleButton">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid Width="44" Height="24" VerticalAlignment="Center">
+                            <Border x:Name="Track" CornerRadius="12">
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="TrackColor" Color="#24271A"/>
+                                </Border.Background>
+                            </Border>
+                            <Border x:Name="Thumb" Width="18" Height="18" CornerRadius="9"
+                                    VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="ThumbColor" Color="#5A5A49"/>
+                                </Border.Background>
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="ThumbSlide" X="3"/>
+                                </Border.RenderTransform>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="TrackColor"
+                                                            Storyboard.TargetProperty="Color"
+                                                            To="#8A5C1E" Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="ThumbColor"
+                                                            Storyboard.TargetProperty="Color"
+                                                            To="#E0A445" Duration="0:0:0.18"/>
+                                            <DoubleAnimation Storyboard.TargetName="ThumbSlide"
+                                                             Storyboard.TargetProperty="X"
+                                                             To="23" Duration="0:0:0.18">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="TrackColor"
+                                                            Storyboard.TargetProperty="Color"
+                                                            To="#24271A" Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="ThumbColor"
+                                                            Storyboard.TargetProperty="Color"
+                                                            To="#5A5A49" Duration="0:0:0.18"/>
+                                            <DoubleAnimation Storyboard.TargetName="ThumbSlide"
+                                                             Storyboard.TargetProperty="X"
+                                                             To="3" Duration="0:0:0.18">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Title bar button -->
+        <Style x:Key="TitleBarButton" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Foreground" Value="#5A5A49"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="#1C1E14"/>
+                                <Setter Property="Foreground" Value="#B9B7A4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource TitleBarButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="#D24B32"/>
+                                <Setter Property="Foreground" Value="#ECE8DD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Bar -->
+        <Grid Grid.Row="0" Background="#101109">
+            <Border BorderBrush="#3A3D2B" BorderThickness="0,0,0,1"
+                    Grid.Row="0" IsHitTestVisible="False"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="18,0,0,0">
+                <Border Width="7" Height="7" CornerRadius="3.5" Background="#C8842A" Margin="0,0,10,0"/>
+                <TextBlock Text="Gmnao Companion" FontSize="13" FontWeight="SemiBold"
+                           Foreground="#B9B7A4" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource TitleBarButton}" Click="OnMinimize">
+                    <Path Data="M0,0 H10" Stroke="#5A5A49" StrokeThickness="1.5"
+                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button Style="{StaticResource CloseButton}" Click="OnClose">
+                    <Path Data="M0,0 L8,8 M8,0 L0,8" Stroke="#5A5A49" StrokeThickness="1.5"
+                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="28,24,28,28">
+
+                <!-- App Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,28">
+                    <Border Width="40" Height="40" CornerRadius="8" Background="#1C1E14"
+                            BorderBrush="#3A3D2B" BorderThickness="1"
+                            Margin="0,0,14,0">
+                        <Border Width="18" Height="18" CornerRadius="3" Background="#C8842A"
+                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Gmnao Companion" FontSize="15" FontWeight="Bold"
+                                   Foreground="#ECE8DD"/>
+                        <TextBlock Text="v1.0.0" FontSize="11" Foreground="#5A5A49" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Section: Allgemein -->
+                <TextBlock Text="ALLGEMEIN" FontSize="10" FontWeight="Bold" Foreground="#807F6C"
+                           Margin="2,0,0,10"/>
+
+                <!-- Setting Row: Autostart -->
+                <Border Background="#1C1E14" CornerRadius="8" Padding="18,15"
+                        BorderBrush="#3A3D2B" BorderThickness="1" Margin="0,0,0,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0">
+                            <TextBlock Text="Mit Windows starten" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="#ECE8DD"/>
+                            <TextBlock Text="App automatisch beim Login starten"
+                                       FontSize="11" Foreground="#807F6C" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="AutoStartToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource ToggleSwitch}"
+                                      Checked="AutoStart_Changed"
+                                      Unchecked="AutoStart_Changed"/>
+                    </Grid>
+                </Border>
+
+                <!-- Section: Battlefield 6 -->
+                <TextBlock Text="BATTLEFIELD 6" FontSize="10" FontWeight="Bold" Foreground="#807F6C"
+                           Margin="2,22,0,10"/>
+
+                <!-- Setting Row: Shadowplay -->
+                <Border Background="#1C1E14" CornerRadius="8" Padding="18,15"
+                        BorderBrush="#3A3D2B" BorderThickness="1" Margin="0,0,0,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0">
+                            <TextBlock Text="Shadowplay-Benachrichtigung" FontSize="13"
+                                       FontWeight="SemiBold" Foreground="#ECE8DD"/>
+                            <TextBlock Text="Fragt beim BF6-Start ob die Aufnahme aktiv ist"
+                                       FontSize="11" Foreground="#807F6C" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <ToggleButton x:Name="ShadowPlayToggle"
+                                      Grid.Column="1"
+                                      Style="{StaticResource ToggleSwitch}"
+                                      Checked="ShadowPlay_Changed"
+                                      Unchecked="ShadowPlay_Changed"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -1,0 +1,20 @@
+# Build output
+bin/
+obj/
+publish/
+
+# Installer output
+installer/output/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# User-specific
+*.rsuser
